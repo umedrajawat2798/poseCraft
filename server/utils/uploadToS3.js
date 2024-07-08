@@ -19,5 +19,3 @@ const uploadToS3 = async (imageBuffer, imageName) => {
 };
 
 module.exports = { uploadToS3 };
-// AKIARZ4DFT37UWZ2ZXFJ
-// 3vt0OTiuViRfIqZeMysgI6G0BgNKPpXLZP7EvI92
