@@ -23,10 +23,16 @@ mongoose
 
 const imageQueue = new Bull("image-processing", {
   redis: {
-    host: "127.0.0.1",
-    port: 6379,
+    host: process.env.REDIS_HOST || "127.0.0.1",
+    port: process.env.PORT || 6379,
   },
 });
+
+imageQueue.isReady().then(()=>{
+  console.log("bull connected")
+}).catch((err)=> {
+  console.log("error in bull", err)
+})
 
 imageQueue.process(async (job) => {
   const { imageUrl, imageData } = job.data;
