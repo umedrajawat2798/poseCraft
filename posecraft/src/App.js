@@ -84,7 +84,7 @@ const App = () => {
         return;
       }
       const response = await axios.post(
-        "http://localhost:8080/api/process-batch",
+        `${process.env.REACT_APP_API_URL}/api/process-batch`,
         { imageUrls: urls }
       );
       setImageIds(response.data.imageIds);
