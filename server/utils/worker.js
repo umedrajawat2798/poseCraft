@@ -26,6 +26,10 @@ const imageQueue = new Bull("image-processing", {
     host: process.env.REDIS_HOST || "127.0.0.1",
     port: process.env.PORT || 6379,
   },
+  defaultJobOptions: {
+    removeOnComplete: true, // Automatically remove completed jobs
+    removeOnFail: true      // Optionally, automatically remove failed jobs
+  }
 });
 
 imageQueue.isReady().then(()=>{
