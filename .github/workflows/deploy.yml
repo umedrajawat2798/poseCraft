@@ -30,7 +30,7 @@ jobs:
           ECR_REGISTRY: 124292275967.dkr.ecr.ap-south-1.amazonaws.com
           IMAGE_TAG: posecraft_fe-image:${{ github.sha }}
         run: |
-          docker-compose -f docker-compose.yml build poseCraft_FE
+          docker build -t posecraft_fe-image -f posecraft/Dockerfile posecraft/
           docker tag posecraft_fe-image ${ECR_REGISTRY}/${IMAGE_TAG}
           docker push ${ECR_REGISTRY}/${IMAGE_TAG}
 
@@ -40,7 +40,7 @@ jobs:
           ECR_REGISTRY: 124292275967.dkr.ecr.ap-south-1.amazonaws.com
           IMAGE_TAG: posecraft_be-image:${{ github.sha }}
         run: |
-          docker-compose -f docker-compose.yml build poseCraft_BE
+          docker build -t posecraft_be-image -f server/Dockerfile server/
           docker tag posecraft_be-image ${ECR_REGISTRY}/${IMAGE_TAG}
           docker push ${ECR_REGISTRY}/${IMAGE_TAG}
 
@@ -50,7 +50,7 @@ jobs:
           ECR_REGISTRY: 124292275967.dkr.ecr.ap-south-1.amazonaws.com
           IMAGE_TAG: posecraft_worker-image:${{ github.sha }}
         run: |
-          docker-compose -f docker-compose.yml build poseCraft_worker
+          docker build -t posecraft_worker-image -f server/worker.Dockerfile server/
           docker tag posecraft_worker-image ${ECR_REGISTRY}/${IMAGE_TAG}
           docker push ${ECR_REGISTRY}/${IMAGE_TAG}
 
