@@ -65,6 +65,10 @@ Database used is mongo.
         redis: {
             host: process.env.REDIS_HOST || "127.0.0.1",
             port: process.env.REDIS_PORT || 6379,
+        },
+        defaultJobOptions: {
+            removeOnComplete: true, // Automatically remove completed jobs
+            removeOnFail: true      // Optionally, automatically remove failed jobs
         }
         });
     
