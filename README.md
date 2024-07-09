@@ -1,12 +1,13 @@
 
 # PoseCraft
 
-In this project a user can upload a picture or upload multiple image urls in the page. The page will multiple views of eachg image like zoom view, length view, neck view etc.
+In this project a user can upload a picture or upload multiple image urls in the page. The page will have multiple views of each image like zoom view, length view, neck view etc.
 
 The project is divided into segments.
- 1. Frontend - this contains upload and insert option for the user. Perform image validity and url validity or else throws error snackbar. Its uses React-table to display all upload images, status and their corresponding view. The updation happens in rel time. 2 methods can be used to achieve this 1. polling 2. websocket. I have used pollng.
+ 1. Frontend - this contains an upload and insert option for the user. Perform image validity and url validity or else throw an error snackbar. Its uses React-table to display all uploaded images, status and their corresponding view. The update happens in rel time. 2 methods can be used to achieve this 1. polling 2. websocket. I have used polling.
 
- 2. Backend - The backend receives the request in form of list of urls or an image file. If its an image file then its uploaded to s3 and a link is generated similar to image url.The url is unique paramter so first we check if already have the data or not. if not then we insert the url into mongo and then pushed to task queue ehich runs independently. The task queue internally accesses the job and performs operationto generate multiple poses using tensorflow and sharp library and the generated image is uploaded to s3 which returns the urls and stored in mongo as shots.
+ 2. Backend - The backend receives the request in the form of a list of urls or an image file. If its an image file then its uploaded to s3 and a link is generated similar to image url.The url is a unique parameter so first we check if we already have the data or not. if not then we insert the url into mongo and then push to the task queue which runs independently. The task queue internally accesses the job and performs operations to generate multiple poses using tensorflow and sharp library and the generated image is uploaded to s3 which returns the urls and stored in mongo as shots.
+
 
 
 ## Commands
