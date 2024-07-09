@@ -1,17 +1,3 @@
-// const processImage = async (req, res) => {
-//     const { imageUrl } = req.body;
-//     // Add image processing logic here using pose detection
-//     res.send({ shots: [] });
-//   };
-  
-//   const processBatchImages = async (req, res) => {
-//     const { imageUrls } = req.body;
-//     // Add batch processing logic here
-//     res.send({ shots: [] });
-//   };
-  
-//   module.exports = { processImage, processBatchImages };
-
 const { generateShots } = require('../utils/shotGeneration');
 const Image = require('../models/Image');
 const { default: axios } = require('axios');
@@ -34,21 +20,9 @@ const processImage = async (req, res) => {
   let url = ""
 
   try {
-    // const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
-    // const imageBuffer = Buffer.from(response.data, 'base64'); // binary
-    // // const imageBuffer = Buffer.from(imageData, 'base64');
-    // console.log("buffer", buffer)
 
     let imageBuffer;
     if (imageData) {
-    //   // imageBuffer = Buffer.from(imageData, 'binary');
-    //   const base64Data = imageData.replace(/^data:image\/\w+;base64,/, '');
-
-    //   // Convert the base64 string to a buffer
-    //   imageBuffer = Buffer.from(base64Data, 'base64');
-    //   // console.log("bf", imageBuffer)
-    //   // console.log("data", imageData)
-    //   const s3Response = await uploadToS3(imageData, `images/${Date.now()}.jpeg`);
     const base64Data = imageData.replace(/^data:image\/\w+;base64,/, '');
     const extension = getImageExtension(imageData);
   
@@ -67,28 +41,6 @@ const processImage = async (req, res) => {
       url = imageUrl
     }
 
-    // const image = new Image({
-    //   url: url,
-    //   status: "pending",
-    //   shots: [
-    //     { label: 'Neck Shot', url: shots.neckShot },
-    //     { label: 'Sleeve Shot', url: shots.sleeveShot },
-    //     { label: 'Zoomed View Shot', url: shots.zoomedShot },
-    //     { label: 'Waist Shot', url: shots.waistShot },
-    //     { label: 'Length Shot', url: shots.lengthShot }
-    //   ],
-    // });
-
-    // await image.save();
-
-    // bull call
-
-    // const job = await myFirstQueue.add({
-    //   url: url
-    // });
-
-    console.log("imageurl", imageUrl)
-
     const image = new Image({
       url: url,
       status: 'pending',
@@ -104,80 +56,11 @@ const processImage = async (req, res) => {
     });
 
     res.json({ message: 'Image processing started', imageId: image._id });
-
-    // const shots = await generateShots(imageBuffer);
-
-    // // Save the original and processed images to your storage (file system, S3, etc.)
-
-    // const image = new Image({
-    //   url: url,
-    //   shots: [
-    //     { label: 'Neck Shot', url: shots.neckShot },
-    //     { label: 'Sleeve Shot', url: shots.sleeveShot },
-    //     { label: 'Zoomed View Shot', url: shots.zoomedShot },
-    //     { label: 'Waist Shot', url: shots.waistShot },
-    //     { label: 'Length Shot', url: shots.lengthShot }
-    //   ],
-    // });
-    // await image.save();
-
-    // const resp = [
-    //   { label: 'Neck Shot', url: shots.neckShot },
-    //   { label: 'Sleeve Shot', url: shots.sleeveShot },
-    //   { label: 'Zoomed View Shot', url: shots.zoomedShot },
-    //   { label: 'Waist Shot', url: shots.waistShot },
-    //   { label: 'Length Shot', url: shots.lengthShot }
-    // ]
-
-    // await image.save();
-    // res.json({ shots: [...resp] });
-    // res.json({ shots });
   } catch (error) {
     console.error('Error processing image:', error);
     res.status(500).json({ error: 'Failed to process image' });
   }
 };
-
-// const processBatchImages = async (req, res) => {
-//   const { imageUrls } = req.body;
-//   const results = [];
-
-//   try {
-//     for (const url of imageUrls) {
-//       const response = await axios.get(url, { responseType: 'arraybuffer' });
-//       const imageBuffer = Buffer.from(response.data, 'binary');
-//       const shots = await generateShots(imageBuffer);
-//       console.log(shots)
-
-//       // Save the original and processed images to your storage (file system, S3, etc.)
-//       const image = new Image({
-//         url,
-//         shots: [
-//           { label: 'Neck Shot', url: shots.neckShot },
-//           { label: 'Sleeve Shot', url: shots.sleeveShot },
-//           { label: 'Zoomed View Shot', url: shots.zoomedShot },
-//           { label: 'Waist Shot', url: shots.waistShot },
-//           { label: 'Length Shot', url: shots.lengthShot }
-//         ],
-//       });
-//       await image.save();
-//       const item = [
-//         { label: 'Neck Shot', url: shots.neckShot },
-//         { label: 'Sleeve Shot', url: shots.sleeveShot },
-//         { label: 'Zoomed View Shot', url: shots.zoomedShot },
-//         { label: 'Waist Shot', url: shots.waistShot },
-//         { label: 'Length Shot', url: shots.lengthShot }
-//       ]
-
-//       results.push(item);
-//     }
-//     console.log("results", results)
-//     res.json({ shots: results });
-//   } catch (error) {
-//     console.error('Error processing batch images:', error);
-//     res.status(500).json({ error: 'Failed to process batch images' });
-//   }
-// };
 
 const processBatchImages = async (req, res) => {
   const { imageUrls } = req.body;
