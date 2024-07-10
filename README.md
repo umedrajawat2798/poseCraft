@@ -9,6 +9,21 @@ The project is divided into segments.
  2. Backend - The backend receives the request in the form of a list of urls or an image file. If its an image file then its uploaded to s3 and a link is generated similar to image url.The url is a unique parameter so first we check if we already have the data or not. if not then we insert the url into mongo and then push to the task queue which runs independently. The task queue internally accesses the job and performs operations to generate multiple poses using tensorflow and sharp library and the generated image is uploaded to s3 which returns the urls and stored in mongo as shots.
 
 
+## Techstack
+ - React.js
+ - Node.js
+ - AWS S3
+ - AWS EC2
+ - Redis
+ - nginx
+ - MongoDb
+ - Vercel
+
+## Demo - https://www.loom.com/share/6329fd0955be4e439e9e4dc598ab6fed?sid=e5417c5f-fb5b-4780-9b6f-7366d28f6d17
+
+## Website - https://pose-craft.vercel.app/
+
+[Note - Please allow untrusted urls in the browser settings to use the site as the backend apis are using self signed SSL certificate.]
 
 ## Commands
    ### Frontend
@@ -84,16 +99,22 @@ Database used is mongo.
   
 
 ## Error Handling
-  if api fails error is sent to ui which is displayed as    snackbar.
+  if api fails error is sent to ui which is displayed as snackbar.
   Invalid url check in ui, displays error as snackbar with the invalid url.
   Image validity check in backend.
   Duplicate urls will not be re processed.
 
+## Deployement
+   ### Frontend
+      integrated with vercel to host the website and also enable CI/CD pipeline
+   ### Backend
+      deployed on AWS EC2 instance to run node.js server using pm2.
   
 ## Resources
 - https://github.com/OptimalBits/bull
 - https://www.tensorflow.org/js/tutorials/setup
--https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/
+- https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/
+- https://search.app/2GtMSzD9QgNXw5wB9
 
 
 
