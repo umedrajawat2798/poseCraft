@@ -23,7 +23,7 @@ The project is divided into segments.
 
 ## Website - https://pose-craft.vercel.app/
 
-[Note - Please allow untrusted urls in the browser settings to use the site as the backend apis are using self signed SSL certificate.]
+## Backend - https://posecraft-api.shop/
 
 ## Commands
    ### Frontend
@@ -106,15 +106,18 @@ Database used is mongo.
 
 ## Deployement
    ### Frontend
-      integrated with vercel to host the website and also enable CI/CD pipeline
+      integrated with vercel to host the website and also enable CI/CD pipeline.
    ### Backend
       deployed on AWS EC2 instance to run node.js server using pm2.
+      Used elastic Ip from AWS and attached to domain bought on www.godaddy.com and setted proxy using nginx and enabled https security using SSL certificate generated using cert.
   
 ## Resources
 - https://github.com/OptimalBits/bull
 - https://www.tensorflow.org/js/tutorials/setup
 - https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/
 - https://search.app/2GtMSzD9QgNXw5wB9
+- https://medium.com/@sharathholmes143/efficiently-manage-your-applications-with-pm2-in-background-790a29fff5e3
+- https://gist.github.com/piyushgarg-dev/8b14c87c8ff4d626ecbc747b6b9fc57f
 
 
 
