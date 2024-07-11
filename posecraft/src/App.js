@@ -32,6 +32,7 @@ const App = () => {
   const handleImageUpload = async (imageData) => {
     try {
       // setProcessing(true);
+      setError('')
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/process`, {
         imageData,
       });
@@ -41,6 +42,8 @@ const App = () => {
         [response.data.imageId]: { status: "pending" },
       }));
     } catch (error) {
+      setError(error.message);
+      setSnackbarOpen(true);
       console.error("Error processing image:", error);
     }
   };
@@ -70,9 +73,6 @@ const App = () => {
       }
       // setProcessing(true);
       setError("");
-      // urls.forEach(async (url)=> {
-      //   isValid = await validateImageUrl(url);
-      // })
       const results = await Promise.all(urls.map(validateImageUrl));
 
       const validUrls = urls.filter((url, index) => results[index]);
@@ -95,12 +95,15 @@ const App = () => {
       }, {});
       setImageStatuses(initialStatuses);
     } catch (error) {
+      setError(error.message);
+      setSnackbarOpen(true);
       console.error("Error processing batch image URLs:", error);
     }
   };
 
   useEffect(() => {
     if (imageIds.length > 0) {
+      let count = 0
       const interval = setInterval(async () => {
         try {
           const promises = imageIds.map(async (id) => {
@@ -109,6 +112,7 @@ const App = () => {
             );
             return { id, ...response.data };
           });
+          count++
           const results = await Promise.all(promises);
           const completedShots = results.filter(
             (result) => result.status === "completed"
@@ -134,6 +138,9 @@ const App = () => {
             if (imageIds.length === 0) {
               // setProcessing(false);
               clearInterval(interval);
+            }
+            if(count > 5){
+              clearInterval(interval)
             }
           }
         } catch (error) {

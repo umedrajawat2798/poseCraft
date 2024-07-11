@@ -150,29 +150,31 @@ const ImageTable = ({ shots, imageIds, imageStatuses }) => {
   return (
     <div style={{ display: "grid", justifyItems: "center"}}>
       <h2>Generated Shots</h2>
-      <table {...getTableProps()} style={{ width: '75%' }}>
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()} style={{ }}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()} style={{ ...cellStyles, ...headerStyles }}>{column.render('Header')}</th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map(row => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => (
-                  <td {...cell.getCellProps()} style={{ ...cellStyles, height: 200, alignContent: "center", textAlign: "center" }}>{cell.render('Cell')}</td>
+      <div style={{ overflowX: "auto", width: "100%", paddingBottom: "30px"}}>
+        <table {...getTableProps()} style={{ width: '90%', margin: "0% 5%" }}>
+          <thead>
+            {headerGroups.map(headerGroup => (
+              <tr {...headerGroup.getHeaderGroupProps()} style={{ }}>
+                {headerGroup.headers.map(column => (
+                  <th {...column.getHeaderProps()} style={{ ...cellStyles, ...headerStyles }}>{column.render('Header')}</th>
                 ))}
               </tr>
-            );
-          })}
-        </tbody>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map(row => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map(cell => (
+                    <td {...cell.getCellProps()} style={{ ...cellStyles, height: 200, alignContent: "center", textAlign: "center" }}>{cell.render('Cell')}</td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
       </table>
+      </div>
     </div>
   );
 };

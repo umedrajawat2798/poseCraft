@@ -10,8 +10,12 @@ const loadImage = async (imagePath) => {
 
 const detectPose = async (image) => {
   const net = await posenet.load();
-  const pose = await net.estimateSinglePose(image, {
-    flipHorizontal: false,
+  const pose = await tf.tidy(() => {
+    // Estimate pose
+    const poseEstimation = net.estimateSinglePose(image, {
+      flipHorizontal: false,
+    });
+    return poseEstimation;
   });
   return pose;
 };

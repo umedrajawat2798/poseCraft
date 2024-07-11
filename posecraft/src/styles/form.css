@@ -1,0 +1,13 @@
+.form-container {
+    display: flex;
+    column-gap: 50px;
+    margin: 50px;
+  }
+  
+  @media (max-width: 600px) {
+    .form-container {
+      flex-direction: column;
+      row-gap: 20px; /* Add some space between elements in column direction */
+    }
+  }
+  

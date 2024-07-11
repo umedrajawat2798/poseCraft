@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
+import "../styles/form.css"
 
 const BatchImageUrlInput = ({ onBatchUrlsSubmit }) => {
   const [urls, setUrls] = useState('');
@@ -11,7 +12,7 @@ const BatchImageUrlInput = ({ onBatchUrlsSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: "flex", columnGap: 50, margin : 50}}>
+    <form onSubmit={handleSubmit} className='form-container'>
       <textarea
         placeholder="Enter image URLs, one per line"
         value={urls}

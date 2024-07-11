@@ -30,6 +30,9 @@ const generateShots = async (imageBuffer) => {
   const image = await loadImage(imageBuffer);
   const pose = await detectPose(image);
 
+  tf.dispose(image); // Dispose the image tensor
+
+
   const keypoints = pose.keypoints.filter((kp) => kp.score > 0.5);
   const neckPoints = keypoints.filter(
     (kp) => kp.part === 'nose' || kp.part === 'leftShoulder' || kp.part === 'rightShoulder'
