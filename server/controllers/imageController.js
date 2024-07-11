@@ -70,19 +70,28 @@ const processBatchImages = async (req, res) => {
     const imageIds = [];
 
     for (const imageUrl of imageUrls) {
-      const image = new Image({
-        url: imageUrl,
-        status: 'pending',
-        shots: []
-      });
+      // Check if an image with the same URL already exists
+      const existingImage = await Image.findOne({ url: imageUrl });
 
-      await image.save();
-      imageIds.push(image._id);
+      if (existingImage) {
+        // If image exists, push its ID to the imageIds list
+        imageIds.push(existingImage._id);
+      } else {
+        // If image does not exist, create a new image and add it to the queue
+        const newImage = new Image({
+          url: imageUrl,
+          status: 'pending',
+          shots: []
+        });
 
-      await imageQueue.add({
-        imageId: image._id,
-        imageUrl
-      });
+        await newImage.save();
+        imageIds.push(newImage._id);
+
+        await imageQueue.add({
+          imageId: newImage._id,
+          imageUrl
+        });
+      }
     }
 
     res.json({ message: 'Batch image processing started', imageIds });
